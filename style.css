@@ -1,18 +1,23 @@
 body {
   background-color: rgb(89, 93, 93);
+
 }
+
 
 
 .button {
     background-color: #F68D00;
     border: none;
+    margin-top: 10px;
     color: white;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
     outline: none;
+    opacity: 0.85;
     float
 }
 
@@ -25,18 +30,27 @@ body {
   width: 200px;
   height: 400px;
   margin: 300px auto;
+  z-index: 1;
 }
 
-.snowflakes {
+.goats {
     top:0px;
     left:0px;
     position:absolute;
-    z-index:200;
+    z-index:-1;
     width:0px;
     height:0px;
     background:white;
+
 }
 
-.grow {
 
+.your-clock {
+    width: 300px;
+    margin: 0 -68px;
+    opacity: 0.85;
+}
+
+.minutes, .seconds {
+  opacity: 0;
 }

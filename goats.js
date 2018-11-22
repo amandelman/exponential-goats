@@ -1,87 +1,70 @@
 console.log("connected123");
-
-
-// var goat;
-// var buttonYes;
-// var buttonNo
-
-// function preload(){
-// goat = loadImage("./images/goat.png");
-// }
-//
-// function setup(){
-//   var cnv = createCanvas(720,580);
-//   buttonYes = createButton('Yes');
-//
-//   // buttonNo = createButton("No");
-//   background(220);
-// }
-//
-// function draw(){
-//   image(goat, 200, 200);
-//   ellipse(100,100,50,50);
-// }
-// function fallingSnow() {
-//
 //   //Working from here: https://stackoverflow.com/questions/19333422/create-random-falling-object-in-jquery
-//
-//     var $goats = $(), qt = 20;
-//
-//     for (var i = 0; i < qt; ++i) {
-//       // $('#container').append('<img class ="goats" src="images/goat.png" />')
-//       // $('.snowflakes').prepend('<img id="theGoat" src="images/goat.png" />')
-//         var $goat = $('<div class="goats"></div>');
-//         $('.container').append(".goats");
-//         $('.goats').append('<img class ="goats" src="images/goat.png"/>');
-//         $goat.css({
-//             'left': (Math.random() * $('#site').width()) + 'px',
-//             'top': (- Math.random() * $('#site').height()) + 'px'
-//         });
-//         // add this snowflake to the set of snowflakes
-//         $goats = $goats.add($goat);
-//     }
-//     $('#snowZone').prepend($goats);
-//
-//     $goats.animate({
-//         top: "500px",
-//         opacity : "0",
-//     }, Math.random() + 5000, function(){
-//         $(this).remove();
-//         // run again when all 20 snowflakes hit the floor
-//         if (--qt < 1) {
-//             fallingSnow();
-//         }
-//     });
-// }
-// fallingSnow();
-var goats = [];
-function fallingSnow() {
+// and here: https://scaleupnation.com/
+//1. Make an array and add and remove shit from it HALF-DONE
+//2. Put buttons in front DONE
+//3. Make a counter DONE
+//4. Make counter give you something new every 100 clicks
 
-    var $snowflakes = $(), qt = 1;
-    //
-    for (var i = 0; i < qt; ++i) {
-        var $snowflake = $('<div class="snowflakes"></div>');
+var clock = $('.your-clock').FlipClock(180, {
+          clockFace: 'MinuteCounter',
+					countdown: true,
+          interval: 50,
+          callbacks: {
+              stop: function() {
+              setTimeout(function(){
+              clock.setTime(180);
+              clock.start();
+            },50)
+          }
+        }
+})
 
-        $snowflake.css({
+
+$('.reset').click(function() {
+  clock.stop();
+});
+
+
+function fallingGoats() {
+    var goats = [];
+
+    // loop through the creation of individual goats, each with their own class "goats"
+    for (var i = 0; i < 1; i++) {
+        var goat = $('<div class="goats"></div>');
+        $('.goats').append('<img src="images/goat.png"/>');
+        //randomize distribution of each goat across screen
+        goat.css({
             'left': (Math.random() * $('#site').width()) + 'px',
             'top': (- Math.random() * $('#site').height()) + 'px'
         });
-        // add this snowflake to the set of snowflakes
-        $snowflakes = $snowflakes.add($snowflake);
-    }
-    $('#snowZone').prepend($snowflakes);
-    $('.snowflakes').append('<img src="images/goat.png"/>');
-
-    $snowflakes.animate({
-        top: "500px",
-        opacity : "0",
-    }, Math.random() + 5000, function(){
-        $(this).remove();
-        // run again when all 20 snowflakes hit the floor
-        if (--qt < 1) {
-            fallingSnow();
+        ///trying to add a class to some of the goat divs on the screen to remove them later
+        // console.log(goat["'0'"].offsetTop);
+        console.log(goat[i]);
+        if(goat.css.left>20){
+          $('.goats').addClass('deleteMe');
         }
-    });
+        // add this randomized goat to the set of goats
+        goats = $(goats).add(goat);
+    }
+    
+    $('#goatZone').append(goats);
+    //fade goats as they fall
+    $(goats).animate({
+        top: "500px", opacity : "0",}, Math.random() *-2500 + 5000,);
+        $('.button').click(function(){
+          $(goat).remove();
+        //VARIOUS experiments to remove goats in a better way. Banging my head against ARRAY problems.
+        // intervalTime +=100;
+        // console.log(intervalTime);
+        });
+        // $('.button').click(function(){
+        //   goats = $(goats).splice(goat);
+        // });
+    console.log(goats.length);
 }
-fallingSnow();
-interval = setInterval(fallingSnow, 100);
+
+
+fallingGoats();
+var intervalTime = 100
+interval = setInterval(fallingGoats, intervalTime);
